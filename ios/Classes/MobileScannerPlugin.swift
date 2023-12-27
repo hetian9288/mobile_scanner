@@ -80,6 +80,8 @@ public class MobileScannerPlugin: NSObject, FlutterPlugin {
             start(call, result)
         case "stop":
             stop(result)
+        case "dispose":
+            dispose(result)
         case "torch":
             toggleTorch(call, result)
         case "analyzeImage":
@@ -147,10 +149,18 @@ public class MobileScannerPlugin: NSObject, FlutterPlugin {
         }
     }
 
-    /// Stops the mobileScanner and closes the texture.
+    /// Stops the mobileScanner
     private func stop(_ result: @escaping FlutterResult) {
         do {
             try mobileScanner.stop()
+        } catch {}
+        result(nil)
+    }
+
+    /// Stops the mobileScanner and closes the texture.
+    private func dispose(_ result: @escaping FlutterResult) {
+        do {
+            try mobileScanner.dispose()
         } catch {}
         result(nil)
     }

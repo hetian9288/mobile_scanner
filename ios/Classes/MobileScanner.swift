@@ -280,10 +280,16 @@ public class MobileScanner: NSObject, AVCaptureVideoDataOutputSampleBufferDelega
         latestBuffer = nil
         device.removeObserver(self, forKeyPath: #keyPath(AVCaptureDevice.torchMode))
         device.removeObserver(self, forKeyPath: #keyPath(AVCaptureDevice.videoZoomFactor))
-        registry?.unregisterTexture(textureId)
-        textureId = nil
+        // registry?.unregisterTexture(textureId)
+        // textureId = nil
         captureSession = nil
         device = nil
+    }
+
+    func dispose() throws {
+        stop()
+        registry?.unregisterTexture(textureId)
+        textureId = nil
     }
 
     /// Set the torch mode.

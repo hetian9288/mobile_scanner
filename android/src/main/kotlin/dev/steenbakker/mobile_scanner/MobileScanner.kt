@@ -398,12 +398,22 @@ class MobileScanner(
         val owner = activity as LifecycleOwner
         camera?.cameraInfo?.torchState?.removeObservers(owner)
         cameraProvider?.unbindAll()
-        textureEntry?.release()
+        // textureEntry?.release()
 
         camera = null
         preview = null
-        textureEntry = null
+        // textureEntry = null
         cameraProvider = null
+    }
+
+    /**
+     * Dispose barcode scanning.
+     */
+    fun dispose() {
+        stop()
+
+        textureEntry?.release()
+        textureEntry = null
     }
 
     private fun isStopped() = camera == null && preview == null

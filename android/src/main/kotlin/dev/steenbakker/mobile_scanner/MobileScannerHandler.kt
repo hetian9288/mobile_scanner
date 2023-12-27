@@ -120,6 +120,7 @@ class MobileScannerHandler(
             "start" -> start(call, result)
             "torch" -> toggleTorch(call, result)
             "stop" -> stop(result)
+            "dispose" -> dispose(result)
             "analyzeImage" -> analyzeImage(call, result)
             "setScale" -> setScale(call, result)
             "resetScale" -> resetScale(result)
@@ -227,6 +228,15 @@ class MobileScannerHandler(
     private fun stop(result: MethodChannel.Result) {
         try {
             mobileScanner!!.stop()
+            result.success(null)
+        } catch (e: AlreadyStopped) {
+            result.success(null)
+        }
+    }
+
+    private fun dispose(result: MethodChannel.Result) {
+        try {
+            mobileScanner!!.dispose()
             result.success(null)
         } catch (e: AlreadyStopped) {
             result.success(null)

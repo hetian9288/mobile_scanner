@@ -404,8 +404,9 @@ class MobileScannerController {
   /// Disposes the MobileScannerController and closes all listeners.
   ///
   /// If you call this, you cannot use this controller object anymore.
-  void dispose() {
-    stop();
+  Future<void> dispose() async {
+    await _methodChannel.invokeMethod('dispose');
+    torchState.value = TorchState.off;
     events?.cancel();
     _barcodesController.close();
   }
